@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-require("dotenv").config();  // Ensure dotenv is loaded
+require("dotenv").config();  
 
-console.log("MONGO_URI:", process.env.MONGO_URI);  // Debug line
+console.log("MONGO_URI:", process.env.MONGO_URI);  
 
 if (!process.env.MONGO_URI) {
-  console.error("❌ MONGO_URI is undefined. Check .env file.");
+  console.error(" MONGO_URI is undefined. Check .env file.");
   process.exit(1);
 }
 
@@ -17,7 +17,7 @@ const connectDB = async () => {
     });
     console.log("✅ MongoDB Connected");
   } catch (err) {
-    console.error("❌ MongoDB Connection Failed:", err.message);
+    console.error(" MongoDB Connection Failed:", err.message);
     process.exit(1);
   }
 };

@@ -5,18 +5,15 @@ const { User, Task } = require("./models");
 
 const router = express.Router();
 
-// Signup Route
 router.post("/auth/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ name, email, password: hashedPassword });
 
@@ -28,7 +25,6 @@ router.post("/auth/signup", async (req, res) => {
   }
 });
 
-// Login Route
 router.post("/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -46,7 +42,6 @@ router.post("/auth/login", async (req, res) => {
   }
 });
 
-// Middleware for Protected Routes
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -62,7 +57,6 @@ const authMiddleware = (req, res, next) => {
   });
 };
 
-// Task CRUD Routes (Protected)
 router.post("/tasks", authMiddleware, async (req, res) => {
   try {
     const task = new Task({ userId: req.user._id, ...req.body });
